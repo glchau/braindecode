@@ -270,6 +270,8 @@ def _parse_description_from_file_path(file_path):
         # expect file paths as
         # tuh_eeg/v2.0.0/edf/000/aaaaaaaa/
         #     s001_2015_12_30/01_tcp_ar/aaaaaaaa_s001_t000.edf
+        # tuh_eeg/v2.0.1/edf/000/aaaaaaac/
+        #     s001_2002/02_tcp_le/aaaaaaac_s001_t000.edf
         # or for abnormal:
         # tuh_eeg_abnormal/v3.0.0/edf/train/normal/
         #     01_tcp_ar/aaaaaaav_s004_t000.edf
@@ -286,7 +288,7 @@ def _parse_description_from_file_path(file_path):
                 "segment": int(segment[1:]),
             }
         )
-        if not abnormal:
+        if (not abnormal) and (version < "v2.0.1"):
             year, month, day = tokens[-3].split("_")[1:]
             description["year"] = int(year)
             description["month"] = int(month)
